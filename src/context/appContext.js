@@ -128,7 +128,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
+        `https://jobifybackend-ucy6.onrender.com/api/v1/auth/${endPoint}`,
         currentUser
       );
 
@@ -157,7 +157,10 @@ const AppProvider = ({ children }) => {
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN });
     try {
-      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+      const { data } = await authFetch.patch(
+        "https://jobifybackend-ucy6.onrender.com/auth/updateUser",
+        currentUser
+      );
 
       const { user, location, token } = data;
 
@@ -187,7 +190,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CREATE_JOB_BEGIN });
     try {
       const { position, company, jobLocation, jobType, status } = state;
-      await authFetch.post("/jobs", {
+      await authFetch.post("https://jobifybackend-ucy6.onrender.com/jobs", {
         position,
         company,
         jobLocation,
@@ -209,7 +212,7 @@ const AppProvider = ({ children }) => {
   const getJobs = async () => {
     const { page, search, searchStatus, searchType, sort } = state;
 
-    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+    let url = `https://jobifybackend-ucy6.onrender.com/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
     if (search) {
       url = url + `&search=${search}`;
     }
@@ -239,13 +242,16 @@ const AppProvider = ({ children }) => {
 
     try {
       const { position, company, jobLocation, jobType, status } = state;
-      await authFetch.patch(`/jobs/${state.editJobId}`, {
-        company,
-        position,
-        jobLocation,
-        jobType,
-        status,
-      });
+      await authFetch.patch(
+        `https://jobifybackend-ucy6.onrender.com/jobs/${state.editJobId}`,
+        {
+          company,
+          position,
+          jobLocation,
+          jobType,
+          status,
+        }
+      );
       dispatch({ type: EDIT_JOB_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
     } catch (error) {
@@ -260,7 +266,9 @@ const AppProvider = ({ children }) => {
   const deleteJob = async (jobId) => {
     dispatch({ type: DELETE_JOB_BEGIN });
     try {
-      await authFetch.delete(`/jobs/${jobId}`);
+      await authFetch.delete(
+        `https://jobifybackend-ucy6.onrender.com/jobs/${jobId}`
+      );
       getJobs();
     } catch (error) {
       logoutUser();
@@ -269,7 +277,9 @@ const AppProvider = ({ children }) => {
   const showStats = async () => {
     dispatch({ type: SHOW_STATS_BEGIN });
     try {
-      const { data } = await authFetch("/jobs/stats");
+      const { data } = await authFetch(
+        "https://jobifybackend-ucy6.onrender.com/jobs/stats"
+      );
       dispatch({
         type: SHOW_STATS_SUCCESS,
         payload: {
