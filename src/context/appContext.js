@@ -73,7 +73,7 @@ const AppProvider = ({ children }) => {
 
   // axios
   const authFetch = axios.create({
-    baseURL: "/api/v1",
+    baseURL: "https://jobifybackend-ucy6.onrender.com/api/v1",
   });
   // request
 
@@ -128,7 +128,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
+        `https://jobifybackend-ucy6.onrender.com/api/v1/auth/${endPoint}`,
         currentUser
       );
 
